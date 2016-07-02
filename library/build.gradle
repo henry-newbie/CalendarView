@@ -31,7 +31,7 @@ publish {
     userOrg = 'henry0311'
     groupId = 'com.henry'
     artifactId = 'calendarview'
-    publishVersion = '1.0.0'
-    desc = 'this is a calendar view'
+    publishVersion = '1.1.0'
+    desc = 'fix bug'
     website = 'https://github.com/henry-newbie/CalendarView'
 }
