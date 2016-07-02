@@ -340,10 +340,9 @@ class SimpleMonthView extends View {
 //                            canvas.drawRoundRect(rectF, 10.0f, 10.0f, mBusyDayBgPaint);
                             mDayTextPaint.setColor(mBusyDaysTextColor);
                         }
-
-                        canvas.drawText(String.format("%d", day), x, getTextYCenter(mTagTextPaint, y - DAY_SELECTED_RECT_SIZE / 2), mDayTextPaint);
                         canvas.drawText("已租", x, getTextYCenter(mBusyDayBgPaint, y + DAY_SELECTED_RECT_SIZE / 2), mDayTextPaint);
                     }
+                    canvas.drawText(String.format("%d", day), x, getTextYCenter(mTagTextPaint, y - DAY_SELECTED_RECT_SIZE / 2), mDayTextPaint);
                 }
             }
 
@@ -370,10 +369,9 @@ class SimpleMonthView extends View {
 //                            canvas.drawRoundRect(rectF, 10.0f, 10.0f, mBusyDayBgPaint);
                             mDayTextPaint.setColor(mInValidDaysTextColor);
                         }
-
-                        canvas.drawText(String.format("%d", day), x, getTextYCenter(mTagTextPaint, y - DAY_SELECTED_RECT_SIZE / 2), mDayTextPaint);
                         canvas.drawText("禁用", x, getTextYCenter(mInValidDayBgPaint, y + DAY_SELECTED_RECT_SIZE / 2), mDayTextPaint);
                     }
+                    canvas.drawText(String.format("%d", day), x, getTextYCenter(mTagTextPaint, y - DAY_SELECTED_RECT_SIZE / 2), mDayTextPaint);
                 }
             }
 
