@@ -82,7 +82,16 @@ public class DayPickerView extends RecyclerView {
         }
         this.dataModel = dataModel;
         this.mController = mController;
+        // 跳转到入住日期所在的月份
+        scrollToSelectedPosition(dataModel.selectedDays, dataModel.monthStart);
         setUpAdapter();
+    }
+
+    private void scrollToSelectedPosition(SimpleMonthAdapter.SelectedDays<SimpleMonthAdapter.CalendarDay> selectedDays, int monthStart) {
+        if(selectedDays != null && selectedDays.getFirst() != null && selectedDays.getFirst().month > monthStart) {
+            int position = selectedDays.getFirst().month - monthStart;
+            scrollToPosition(position);
+        }
     }
 
     public static class DataModel implements Serializable {

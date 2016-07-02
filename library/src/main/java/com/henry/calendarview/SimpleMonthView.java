@@ -31,7 +31,7 @@ class SimpleMonthView extends View {
     public static final String VIEW_PARAMS_SELECTED_LAST_DATE = "selected_last_date";
     public static final String VIEW_PARAMS_NEAREST_DATE = "mNearestDay";
 
-    public static final String VIEW_PARAMS_HEIGHT = "height";
+//    public static final String VIEW_PARAMS_HEIGHT = "height";
     public static final String VIEW_PARAMS_MONTH = "month";
     public static final String VIEW_PARAMS_YEAR = "year";
     public static final String VIEW_PARAMS_WEEK_START = "week_start";
@@ -39,15 +39,15 @@ class SimpleMonthView extends View {
     private static final int SELECTED_CIRCLE_ALPHA = 128;
     protected static int DEFAULT_HEIGHT = 32;                           // 默认一行的高度
     protected static final int DEFAULT_NUM_ROWS = 6;
-    protected static int DAY_SELECTED_RECT_SIZE;                      // 选中圆角矩形半径
-    protected static int DAY_SEPARATOR_WIDTH = 12;                      // 每个cell中间的间距
+    protected static int DAY_SELECTED_RECT_SIZE;                        // 选中圆角矩形半径
+    protected static int ROW_SEPARATOR = 12;                            // 每行中间的间距
     protected static int MINI_DAY_NUMBER_TEXT_SIZE;                     // 日期字体的最小尺寸
     private static int TAG_TEXT_SIZE;                                   // 标签字体大小
     protected static int MIN_HEIGHT = 10;                               // 最小高度
-    protected static int MONTH_DAY_LABEL_TEXT_SIZE;                     // 头部的星期几的字体大小
+//    protected static int MONTH_DAY_LABEL_TEXT_SIZE;                     // 头部的星期几的字体大小
     protected static int MONTH_HEADER_SIZE;                             // 头部的高度（包括年份月份，星期几）
     protected static int YEAR_MONTH_TEXT_SIZE;                         // 头部年份月份的字体大小
-    protected static int WEEK_TEXT_SIZE;                         // 头部年份月份的字体大小
+    protected static int WEEK_TEXT_SIZE;                                // 头部年份月份的字体大小
     //    private final int mSelectType;                                // 类型
 //    private boolean mIsDisplayTag;                                      // 是否显示标签
 
@@ -81,6 +81,8 @@ class SimpleMonthView extends View {
     protected int mSelectedDaysBgColor;                 // 选中的日期背景颜色
     protected int mBusyDaysBgColor;                     // 被占用的日期背景颜色
     protected int mInValidDaysBgColor;                  // 禁用的日期背景颜色
+    protected int mBusyDaysTextColor;                     // 被占用的日期字体颜色
+    protected int mInValidDaysTextColor;                  // 禁用的日期字体颜色
 
     private final StringBuilder mStringBuilder;
 
@@ -90,7 +92,7 @@ class SimpleMonthView extends View {
     protected int mNumDays = 7;                 // 一行几列
     protected int mNumCells;                    // 一个月有多少天
     private int mDayOfWeekStart = 0;            // 日期对应星期几
-    protected Boolean mDrawRect;
+//    protected Boolean mDrawRect;              // 圆角还是圆形
     protected int mRowHeight = DEFAULT_HEIGHT;  // 行高
     protected int mWidth;                       // simpleMonthView的宽度
 
@@ -129,26 +131,30 @@ class SimpleMonthView extends View {
         mDayOfWeekTypeface = resources.getString(R.string.sans_serif);
         mMonthTitleTypeface = resources.getString(R.string.sans_serif);
         mCurrentDayTextColor = typedArray.getColor(R.styleable.DayPickerView_colorCurrentDay, resources.getColor(R.color.normal_day));
-        mYearMonthTextColor = typedArray.getColor(R.styleable.DayPickerView_colorMonthName, resources.getColor(R.color.normal_day));
+        mYearMonthTextColor = typedArray.getColor(R.styleable.DayPickerView_colorYearMonthText, resources.getColor(R.color.normal_day));
+        mWeekTextColor = typedArray.getColor(R.styleable.DayPickerView_colorWeekText, resources.getColor(R.color.normal_day));
 //        mDayTextColor = typedArray.getColor(R.styleable.DayPickerView_colorDayName, resources.getColor(R.color.normal_day));
-        mDayTextColor = typedArray.getColor(R.styleable.DayPickerView_colorNormalDay, resources.getColor(R.color.normal_day));
-        mPreviousDayTextColor = typedArray.getColor(R.styleable.DayPickerView_colorPreviousDay, resources.getColor(R.color.normal_day));
+        mDayTextColor = typedArray.getColor(R.styleable.DayPickerView_colorNormalDayText, resources.getColor(R.color.normal_day));
+        mPreviousDayTextColor = typedArray.getColor(R.styleable.DayPickerView_colorPreviousDayText, resources.getColor(R.color.normal_day));
         mSelectedDaysBgColor = typedArray.getColor(R.styleable.DayPickerView_colorSelectedDayBackground, resources.getColor(R.color.selected_day_background));
         mSelectedDayTextColor = typedArray.getColor(R.styleable.DayPickerView_colorSelectedDayText, resources.getColor(R.color.selected_day_text));
-        mBusyDaysBgColor = typedArray.getColor(R.styleable.DayPickerView_noSelectedDayBgColor, Color.GRAY);
-        mInValidDaysBgColor = resources.getColor(R.color.dark_green);
-        mDrawRect = typedArray.getBoolean(R.styleable.DayPickerView_drawRoundRect, true);
+        mBusyDaysBgColor = typedArray.getColor(R.styleable.DayPickerView_colorBusyDaysBg, Color.GRAY);
+        mInValidDaysBgColor = typedArray.getColor(R.styleable.DayPickerView_colorInValidDaysBg, Color.GRAY);
+        mBusyDaysTextColor = typedArray.getColor(R.styleable.DayPickerView_colorBusyDaysText, resources.getColor(R.color.normal_day));
+        mInValidDaysTextColor = typedArray.getColor(R.styleable.DayPickerView_colorInValidDaysText, resources.getColor(R.color.normal_day));
+//        mDrawRect = typedArray.getBoolean(R.styleable.DayPickerView_drawRoundRect, true);
 
         mStringBuilder = new StringBuilder(50);
 
         MINI_DAY_NUMBER_TEXT_SIZE = typedArray.getDimensionPixelSize(R.styleable.DayPickerView_textSizeDay, resources.getDimensionPixelSize(R.dimen.text_size_day));
         TAG_TEXT_SIZE = typedArray.getDimensionPixelSize(R.styleable.DayPickerView_textSizeTag, resources.getDimensionPixelSize(R.dimen.text_size_tag));
-        YEAR_MONTH_TEXT_SIZE = typedArray.getDimensionPixelSize(R.styleable.DayPickerView_textSizeMonth, resources.getDimensionPixelSize(R.dimen.text_size_month));
-        MONTH_DAY_LABEL_TEXT_SIZE = typedArray.getDimensionPixelSize(R.styleable.DayPickerView_textSizeDayName, resources.getDimensionPixelSize(R.dimen.text_size_day_name));
+        YEAR_MONTH_TEXT_SIZE = typedArray.getDimensionPixelSize(R.styleable.DayPickerView_textSizeYearMonth, resources.getDimensionPixelSize(R.dimen.text_size_month));
+        WEEK_TEXT_SIZE = typedArray.getDimensionPixelSize(R.styleable.DayPickerView_textSizeWeek, resources.getDimensionPixelSize(R.dimen.text_size_day_name));
         MONTH_HEADER_SIZE = typedArray.getDimensionPixelOffset(R.styleable.DayPickerView_headerMonthHeight, resources.getDimensionPixelOffset(R.dimen.header_month_height));
         DAY_SELECTED_RECT_SIZE = typedArray.getDimensionPixelSize(R.styleable.DayPickerView_selectedDayRadius, resources.getDimensionPixelOffset(R.dimen.selected_day_radius));
 
-        mRowHeight = ((typedArray.getDimensionPixelSize(R.styleable.DayPickerView_calendarHeight, resources.getDimensionPixelOffset(R.dimen.calendar_height)) - MONTH_HEADER_SIZE) / 6);
+        mRowHeight = ((typedArray.getDimensionPixelSize(R.styleable.DayPickerView_calendarHeight,
+                resources.getDimensionPixelOffset(R.dimen.calendar_height)) - MONTH_HEADER_SIZE - ROW_SEPARATOR) / 6);
 
         isPrevDayEnabled = typedArray.getBoolean(R.styleable.DayPickerView_enablePreviousDay, false);
         mInvalidDays = dataModel.invalidDays;
@@ -179,7 +185,7 @@ class SimpleMonthView extends View {
      * @param canvas
      */
     private void drawMonthDayLabels(Canvas canvas) {
-        int y = MONTH_HEADER_SIZE - (MONTH_DAY_LABEL_TEXT_SIZE / 2);
+        int y = MONTH_HEADER_SIZE - (WEEK_TEXT_SIZE / 2);
         // 一个cell的二分之宽度
         int dayWidthHalf = (mWidth - mPadding * 2) / (mNumDays * 2);
 
@@ -199,7 +205,7 @@ class SimpleMonthView extends View {
      */
     private void drawMonthTitle(Canvas canvas) {
         int x = (mWidth + 2 * mPadding) / 2;
-        int y = (MONTH_HEADER_SIZE - MONTH_DAY_LABEL_TEXT_SIZE) / 2 + (YEAR_MONTH_TEXT_SIZE / 3);
+        int y = (MONTH_HEADER_SIZE - WEEK_TEXT_SIZE) / 2 + (YEAR_MONTH_TEXT_SIZE / 3);
         StringBuilder stringBuilder = new StringBuilder(getMonthAndYearString().toLowerCase());
         stringBuilder.setCharAt(0, Character.toUpperCase(stringBuilder.charAt(0)));
         canvas.drawText(stringBuilder.toString(), x, y, mYearMonthPaint);
@@ -256,7 +262,7 @@ class SimpleMonthView extends View {
      */
     protected void drawMonthCell(Canvas canvas) {
         // ?
-        int y = MONTH_HEADER_SIZE + DAY_SEPARATOR_WIDTH + mRowHeight / 2;
+        int y = MONTH_HEADER_SIZE + ROW_SEPARATOR + mRowHeight / 2;
         int paddingDay = (mWidth - 2 * mPadding) / (2 * mNumDays);
         int dayOffset = findDayOffset();
         int day = 1;
@@ -264,9 +270,9 @@ class SimpleMonthView extends View {
         while (day <= mNumCells) {
             int x = paddingDay * (1 + dayOffset * 2) + mPadding;
 
-            mTagTextPaint.setColor(Color.GRAY);
             mDayTextPaint.setColor(mDayTextColor);
             mDayTextPaint.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+            mTagTextPaint.setColor(mDayTextColor);
 
             cellCalendar.setDay(mYear, mMonth, day);
 
@@ -313,10 +319,10 @@ class SimpleMonthView extends View {
             }
 
             // 被占用的日期
-            boolean isNoSeleDay = false;
+            boolean isBusyDay = false;
             for (SimpleMonthAdapter.CalendarDay calendarDay : mBusyDays) {
                 if (cellCalendar.equals(calendarDay) && !isPrevDay) {
-                    isNoSeleDay = true;
+                    isBusyDay = true;
 //                    RectF rectF = new RectF(x - DAY_SELECTED_RECT_SIZE,
 //                            (y - MINI_DAY_NUMBER_TEXT_SIZE / 3) - DAY_SELECTED_RECT_SIZE,
 //                            x + DAY_SELECTED_RECT_SIZE, (y - MINI_DAY_NUMBER_TEXT_SIZE / 3) + DAY_SELECTED_RECT_SIZE);
@@ -328,12 +334,15 @@ class SimpleMonthView extends View {
                     } else {
                         // 选择了入住日期，没有选择退房日期，mNearestDay变为可选且不变灰色
                         if (mStartDate != null && mEndDate == null && mNearestDay != null && cellCalendar.equals(mNearestDay)) {
-
+                            mDayTextPaint.setColor(mDayTextColor);
                         } else {
                             drawDayBg(canvas, x, y, mBusyDayBgPaint);
 //                            canvas.drawRoundRect(rectF, 10.0f, 10.0f, mBusyDayBgPaint);
+                            mDayTextPaint.setColor(mBusyDaysTextColor);
                         }
-                        canvas.drawText("已租", x, getTextYCenter(mBusyDayBgPaint, y + DAY_SELECTED_RECT_SIZE / 2), mBusyDayBgPaint);
+
+                        canvas.drawText(String.format("%d", day), x, getTextYCenter(mTagTextPaint, y - DAY_SELECTED_RECT_SIZE / 2), mDayTextPaint);
+                        canvas.drawText("已租", x, getTextYCenter(mBusyDayBgPaint, y + DAY_SELECTED_RECT_SIZE / 2), mDayTextPaint);
                     }
                 }
             }
@@ -343,7 +352,7 @@ class SimpleMonthView extends View {
             for (SimpleMonthAdapter.CalendarDay calendarDay : mInvalidDays) {
 
                 if (cellCalendar.equals(calendarDay) && !isPrevDay) {
-                    isNoSeleDay = true;
+                    isBusyDay = true;
 //                    RectF rectF = new RectF(x - DAY_SELECTED_RECT_SIZE,
 //                            (y - MINI_DAY_NUMBER_TEXT_SIZE / 3) - DAY_SELECTED_RECT_SIZE,
 //                            x + DAY_SELECTED_RECT_SIZE, (y - MINI_DAY_NUMBER_TEXT_SIZE / 3) + DAY_SELECTED_RECT_SIZE);
@@ -355,12 +364,15 @@ class SimpleMonthView extends View {
                     } else {
                         // 选择了入住日期，没有选择退房日期，mNearestDay变为可选且不变灰色
                         if (mStartDate != null && mEndDate == null && mNearestDay != null && cellCalendar.equals(mNearestDay)) {
-
+                            mDayTextPaint.setColor(mDayTextColor);
                         } else {
                             drawDayBg(canvas, x, y, mInValidDayBgPaint);
 //                            canvas.drawRoundRect(rectF, 10.0f, 10.0f, mBusyDayBgPaint);
+                            mDayTextPaint.setColor(mInValidDaysTextColor);
                         }
-                        canvas.drawText("禁用", x, getTextYCenter(mInValidDayBgPaint, y + DAY_SELECTED_RECT_SIZE / 2), mInValidDayBgPaint);
+
+                        canvas.drawText(String.format("%d", day), x, getTextYCenter(mTagTextPaint, y - DAY_SELECTED_RECT_SIZE / 2), mDayTextPaint);
+                        canvas.drawText("禁用", x, getTextYCenter(mInValidDayBgPaint, y + DAY_SELECTED_RECT_SIZE / 2), mDayTextPaint);
                     }
                 }
             }
@@ -370,7 +382,7 @@ class SimpleMonthView extends View {
             // 2：只选择了入住日期且没有选择退房日期
             // 3：比入住日期小全部变灰且不可点击
             // 4：比入住日期大且离入住日期最近的被禁用或者被占用的日期
-            if (mStartDate != null && mEndDate == null && !mStartDate.equals(mEndDate) && !isInvalidDays && !isNoSeleDay) {
+            if (mStartDate != null && mEndDate == null && !mStartDate.equals(mEndDate) && !isInvalidDays && !isBusyDay) {
                 if (cellCalendar.before(mStartDate) || (mNearestDay != null && cellCalendar.after(mNearestDay))) {
 //                    RectF rectF = new RectF(x - DAY_SELECTED_RECT_SIZE, (y - MINI_DAY_NUMBER_TEXT_SIZE / 3) - DAY_SELECTED_RECT_SIZE,
 //                            x + DAY_SELECTED_RECT_SIZE, (y - MINI_DAY_NUMBER_TEXT_SIZE / 3) + DAY_SELECTED_RECT_SIZE);
@@ -380,7 +392,7 @@ class SimpleMonthView extends View {
             }
 
             // 绘制标签
-            if (!isPrevDay && !isInvalidDays && !isNoSeleDay && !isBeginDay && !isLastDay) {
+            if (!isPrevDay && !isInvalidDays && !isBusyDay && !isBeginDay && !isLastDay) {
                 boolean isCalendarTag = false;
                 for (SimpleMonthAdapter.CalendarDay calendarDay : mCalendarTags) {
                     if (cellCalendar.equals(calendarDay)) {
@@ -394,8 +406,8 @@ class SimpleMonthView extends View {
             }
 
             // 绘制日期
-            if (!isToady && !isPrevDay) {
-                canvas.drawText(String.format("%d", day), x, y - DAY_SELECTED_RECT_SIZE / 6, mDayTextPaint);
+            if (!isToady && !isPrevDay && !isInvalidDays && !isBusyDay) {
+                canvas.drawText(String.format("%d", day), x, getTextYCenter(mTagTextPaint, y - DAY_SELECTED_RECT_SIZE / 2), mDayTextPaint);
             }
 
             dayOffset++;
@@ -515,6 +527,7 @@ class SimpleMonthView extends View {
         // 日期字体paint
         mDayTextPaint = new Paint();
         mDayTextPaint.setAntiAlias(true);
+        mDayTextPaint.setColor(mDayTextColor);
         mDayTextPaint.setTextSize(MINI_DAY_NUMBER_TEXT_SIZE);
         mDayTextPaint.setStyle(Style.FILL);
         mDayTextPaint.setTextAlign(Align.CENTER);
@@ -523,7 +536,7 @@ class SimpleMonthView extends View {
         // 标签字体paint
         mTagTextPaint = new Paint();
         mTagTextPaint.setAntiAlias(true);
-        mTagTextPaint.setColor(Color.GRAY);
+        mTagTextPaint.setColor(mDayTextColor);
         mTagTextPaint.setTextSize(TAG_TEXT_SIZE);
         mTagTextPaint.setStyle(Style.FILL);
         mTagTextPaint.setTextAlign(Align.CENTER);
@@ -540,7 +553,7 @@ class SimpleMonthView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         // 设置simpleMonthView的宽度和高度
-        setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), mRowHeight * mNumRows + MONTH_HEADER_SIZE + DAY_SEPARATOR_WIDTH);
+        setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), mRowHeight * mNumRows + MONTH_HEADER_SIZE + ROW_SEPARATOR);
     }
 
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -589,12 +602,12 @@ class SimpleMonthView extends View {
         }
         setTag(params);
 
-        if (params.containsKey(VIEW_PARAMS_HEIGHT)) {
-            mRowHeight = (int) params.get(VIEW_PARAMS_HEIGHT);
-            if (mRowHeight < MIN_HEIGHT) {
-                mRowHeight = MIN_HEIGHT;
-            }
-        }
+//        if (params.containsKey(VIEW_PARAMS_HEIGHT)) {
+//            mRowHeight = (int) params.get(VIEW_PARAMS_HEIGHT);
+//            if (mRowHeight < MIN_HEIGHT) {
+//                mRowHeight = MIN_HEIGHT;
+//            }
+//        }
 
         if (params.containsKey(VIEW_PARAMS_SELECTED_BEGIN_DATE)) {
             mStartDate = (SimpleMonthAdapter.CalendarDay) params.get(VIEW_PARAMS_SELECTED_BEGIN_DATE);
@@ -652,12 +665,9 @@ class SimpleMonthView extends View {
      * @param y
      */
     private void drawDayBg(Canvas canvas, int x, int y, Paint paint) {
-        if (mDrawRect) {
-            RectF rectF = new RectF(x - DAY_SELECTED_RECT_SIZE, y - DAY_SELECTED_RECT_SIZE,
-                    x + DAY_SELECTED_RECT_SIZE, y + DAY_SELECTED_RECT_SIZE);
-            canvas.drawRoundRect(rectF, 10.0f, 10.0f, paint);
-        } else
-            canvas.drawCircle(x, y - MINI_DAY_NUMBER_TEXT_SIZE / 3, DAY_SELECTED_RECT_SIZE, mSelectedDayBgPaint);
+        RectF rectF = new RectF(x - DAY_SELECTED_RECT_SIZE, y - DAY_SELECTED_RECT_SIZE,
+                x + DAY_SELECTED_RECT_SIZE, y + DAY_SELECTED_RECT_SIZE);
+        canvas.drawRoundRect(rectF, 10.0f, 10.0f, paint);
     }
 
     /**

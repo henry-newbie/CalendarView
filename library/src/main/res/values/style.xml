@@ -2,32 +2,35 @@
 <resources>
     <!-- 日历 -->
     <declare-styleable name="DayPickerView">
-        <attr name="colorCurrentDay" format="color"/>
-        <attr name="colorSelectedDayBackground" format="color"/>
-        <attr name="colorSelectedDayText" format="color"/>
-        <attr name="colorPreviousDay" format="color"/>
-        <attr name="colorNormalDay" format="color" />
-        <attr name="colorMonthName" format="color" />
-        <attr name="colorDayName" format="color" />
-        <attr name="textSizeDay" format="dimension"/>
-        <attr name="textSizeTag" format="dimension"/>
-        <attr name="textSizeMonth" format="dimension" />
-        <attr name="textSizeDayName" format="dimension" />
-        <attr name="headerMonthHeight" format="dimension" />
-        <attr name="selectedDayRadius" format="dimension" />
-        <attr name="calendarHeight" format="dimension" />
-        <attr name="enablePreviousDay" format="boolean" />
-        <attr name="currentDaySelected" format="boolean" />
-        <attr name="drawRoundRect" format="boolean" />
-        <attr name="noSelectedDayBgColor" format="color" />
-        <attr name="leastsSeleDaysNum" format="integer" />
-        <attr name="mostSeleDaysNum" format="integer" />
-        <attr name="type" format="enum">
+        <attr name="colorCurrentDay" format="color"/>               <!-- 今天字体颜色 -->
+        <attr name="colorSelectedDayBackground" format="color"/>    <!-- 被选中的日期背景颜色 -->
+        <attr name="colorSelectedDayText" format="color"/>          <!-- 被选中的日期字体颜色 -->
+        <attr name="colorPreviousDayText" format="color"/>          <!-- 已过去的日期字体颜色 -->
+        <attr name="colorNormalDayText" format="color" />           <!-- 正常日期颜色 -->
+        <attr name="colorYearMonthText" format="color" />           <!-- 头部年份月份字体颜色 -->
+        <attr name="colorWeekText" format="color" />                <!-- 头部星期几字体颜色 -->
+        <attr name="colorBusyDaysBg" format="color" />              <!-- 被占用的日期背景颜色 -->
+        <attr name="colorInValidDaysBg" format="color" />           <!-- 禁用的日期背景颜色 -->
+        <attr name="colorBusyDaysText" format="color" />            <!-- 被占用的日期字体颜色 -->
+        <attr name="colorInValidDaysText" format="color" />         <!-- 禁用的日期字体颜色 -->
+
+        <attr name="textSizeDay" format="dimension"/>               <!-- 正常日期字体大小 -->
+        <attr name="textSizeTag" format="dimension"/>               <!-- 标签字体大小 -->
+        <attr name="textSizeYearMonth" format="dimension" />        <!-- 头部年份月份字体大小 -->
+        <attr name="textSizeWeek" format="dimension" />             <!-- 头部星期几字体大小 -->
+        <attr name="headerMonthHeight" format="dimension" />        <!-- 头部高度 -->
+        <attr name="selectedDayRadius" format="dimension" />        <!-- 日期半径 -->
+        <attr name="calendarHeight" format="dimension" />           <!-- 行高 -->
+        <attr name="enablePreviousDay" format="boolean" />          <!-- 已过去的日期是否能被操作 -->
+        <!--<attr name="drawRoundRect" format="boolean" />-->
+        <!--<attr name="leastsSeleDaysNum" format="integer" />-->
+        <!--<attr name="mostSeleDaysNum" format="integer" />-->
+<!--        <attr name="type" format="enum">
             <enum name="multiChoice" value="0" />
             <enum name="range" value="1" />
             <enum name="onlyRead" value="2" />
-        </attr>
-        <attr name="firstMonth" format="enum">
+        </attr>-->
+<!--        <attr name="firstMonth" format="enum">
             <enum name="january" value="0" />
             <enum name="february" value="1" />
             <enum name="march" value="2" />
@@ -54,6 +57,6 @@
             <enum name="october" value="9" />
             <enum name="november" value="10" />
             <enum name="december" value="11" />
-        </attr>
+        </attr>-->
     </declare-styleable>
 </resources>

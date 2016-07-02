@@ -10,7 +10,7 @@ public interface DatePickerController {
     }
 //	public abstract int getMaxYear();
 
-    void onDayOfMonthSelected(int year, int month, int day);                        // 点击日期回调函数，月份记得加1
+    void onDayOfMonthSelected(SimpleMonthAdapter.CalendarDay calendarDay);          // 点击日期回调函数，月份记得加1
 
     void onDateRangeSelected(List<SimpleMonthAdapter.CalendarDay> selectedDays);    // 选择范围回调函数，月份记得加1
 

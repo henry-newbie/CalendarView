@@ -2,8 +2,7 @@
 <resources>
     <!-- 日历定义的一些颜色 -->
     <color name="normal_day">#ff999999</color>
-    <color name="selected_day_background">#FF0000</color>
+    <color name="selected_day_background">#C2185B</color>
     <color name="selected_day_text">#FFFFFF</color>
     <color name="invalid_day_background">#c0c0c0</color>
-    <color name="dark_green">#ff00725a</color>
 </resources>
