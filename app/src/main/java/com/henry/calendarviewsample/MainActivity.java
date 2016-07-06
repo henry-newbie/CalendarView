@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         dataModel.monthCount = 16;
         dataModel.defTag = "￥100";
         dataModel.leastDaysNum = 2;
-        dataModel.mostDaysNum = 20;
+        dataModel.mostDaysNum = 100;
 
         List<SimpleMonthAdapter.CalendarDay> invalidDays = new ArrayList<>();
         SimpleMonthAdapter.CalendarDay invalidDay1 = new SimpleMonthAdapter.CalendarDay(2016, 8, 10);
@@ -50,10 +50,10 @@ public class MainActivity extends AppCompatActivity {
         busyDays.add(busyDay3);
         dataModel.busyDays = busyDays;
 
-        SimpleMonthAdapter.CalendarDay startDay = new SimpleMonthAdapter.CalendarDay(2016, 6, 5);
-        SimpleMonthAdapter.CalendarDay endDay = new SimpleMonthAdapter.CalendarDay(2016, 6, 20);
-        SimpleMonthAdapter.SelectedDays<SimpleMonthAdapter.CalendarDay> selectedDays = new SimpleMonthAdapter.SelectedDays<>(startDay, endDay);
-        dataModel.selectedDays = selectedDays;
+//        SimpleMonthAdapter.CalendarDay startDay = new SimpleMonthAdapter.CalendarDay(2016, 6, 5);
+//        SimpleMonthAdapter.CalendarDay endDay = new SimpleMonthAdapter.CalendarDay(2016, 6, 20);
+//        SimpleMonthAdapter.SelectedDays<SimpleMonthAdapter.CalendarDay> selectedDays = new SimpleMonthAdapter.SelectedDays<>(startDay, endDay);
+//        dataModel.selectedDays = selectedDays;
 
         SimpleMonthAdapter.CalendarDay tag = new SimpleMonthAdapter.CalendarDay(2016, 7, 15);
         tag.setTag("标签1");

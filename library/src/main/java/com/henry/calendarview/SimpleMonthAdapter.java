@@ -3,6 +3,7 @@ package com.henry.calendarview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -71,12 +72,32 @@ public class SimpleMonthAdapter extends RecyclerView.Adapter<SimpleMonthAdapter.
             dataModel.selectedDays = new SelectedDays<>();
         }
 
+        if (dataModel.yearStart <= 0) {
+            dataModel.yearStart = calendar.get(Calendar.YEAR);
+        }
+        if (dataModel.monthStart <= 0) {
+            dataModel.monthStart = calendar.get(Calendar.MONTH);
+        }
+
         if (dataModel.leastDaysNum <= 0) {
             dataModel.leastDaysNum = 0;
         }
 
         if (dataModel.mostDaysNum <= 0) {
             dataModel.mostDaysNum = 100;
+        }
+
+        if (dataModel.leastDaysNum > dataModel.mostDaysNum) {
+            Log.e("error", "可选择的最小天数不能小于最大天数");
+            throw new IllegalArgumentException("可选择的最小天数不能小于最大天数");
+        }
+
+        if(dataModel.monthCount <= 0) {
+            dataModel.monthCount = 12;
+        }
+
+        if(dataModel.defTag == null) {
+            dataModel.defTag = "标签";
         }
 
         mLeastDaysNum = dataModel.leastDaysNum;
@@ -104,12 +125,6 @@ public class SimpleMonthAdapter extends RecyclerView.Adapter<SimpleMonthAdapter.
 
         int monthStart = dataModel.monthStart;
         int yearStart = dataModel.yearStart;
-        if (yearStart <= 0) {
-            yearStart = calendar.get(Calendar.YEAR);
-        }
-        if (monthStart <= 0) {
-            monthStart = calendar.get(Calendar.MONTH);
-        }
 
         month = (monthStart + (position % MONTHS_IN_YEAR)) % MONTHS_IN_YEAR;
         year = position / MONTHS_IN_YEAR + yearStart + ((monthStart + (position % MONTHS_IN_YEAR)) / MONTHS_IN_YEAR);
@@ -160,7 +175,9 @@ public class SimpleMonthAdapter extends RecyclerView.Adapter<SimpleMonthAdapter.
      * @param calendarDay
      */
     protected void onDayTapped(CalendarDay calendarDay) {
-        mController.onDayOfMonthSelected(calendarDay);
+        if(mController != null) {
+            mController.onDayOfMonthSelected(calendarDay);
+        }
         setRangeSelectedDay(calendarDay);
     }
 
@@ -176,36 +193,48 @@ public class SimpleMonthAdapter extends RecyclerView.Adapter<SimpleMonthAdapter.
             mNearestDay = getNearestDay(rangeDays.getFirst());
             // 所选日期范围内是否有被占用的日期
             if (isContainSpecialDays(rangeDays.getFirst(), calendarDay, mBusyDays)) {
-                mController.alertSelectedFail(DatePickerController.FailEven.CONTAIN_NO_SELECTED);
+                if(mController != null) {
+                    mController.alertSelectedFail(DatePickerController.FailEven.CONTAIN_NO_SELECTED);
+                }
                 return;
             }
             // 所选日期范围内是否有无效的日期
             if (isContainSpecialDays(rangeDays.getFirst(), calendarDay, mInvalidDays)) {
-                mController.alertSelectedFail(DatePickerController.FailEven.CONTAIN_INVALID);
+                if(mController != null) {
+                    mController.alertSelectedFail(DatePickerController.FailEven.CONTAIN_INVALID);
+                }
                 return;
             }
             // 所选退房日期不能再入住日期之前
             if (calendarDay.getDate().before(rangeDays.getFirst().getDate())) {
-                mController.alertSelectedFail(DatePickerController.FailEven.END_MT_START);
+                if(mController != null) {
+                    mController.alertSelectedFail(DatePickerController.FailEven.END_MT_START);
+                }
                 return;
             }
 
             int dayDiff = dateDiff(rangeDays.getFirst(), calendarDay);
             // 所选的日期范围不能小于最小限制
             if (dayDiff > 1 && mLeastDaysNum > dayDiff) {
-                mController.alertSelectedFail(DatePickerController.FailEven.NO_REACH_LEAST_DAYS);
+                if(mController != null) {
+                    mController.alertSelectedFail(DatePickerController.FailEven.NO_REACH_LEAST_DAYS);
+                }
                 return;
             }
             // 所选日期范围不能大于最大限制
             if (dayDiff > 1 && mMostDaysNum < dayDiff) {
-                mController.alertSelectedFail(DatePickerController.FailEven.NO_REACH_MOST_DAYS);
+                if(mController != null) {
+                    mController.alertSelectedFail(DatePickerController.FailEven.NO_REACH_MOST_DAYS);
+                }
                 return;
             }
 
             rangeDays.setLast(calendarDay);
 
             // 把开始日期和结束日期中间的所有日期都加到list中
-            mController.onDateRangeSelected(addSelectedDays());
+            if(mController != null) {
+                mController.onDateRangeSelected(addSelectedDays());
+            }
         } else if (rangeDays.getLast() != null) {   // 重新选择入住日期
             rangeDays.setFirst(calendarDay);
             rangeDays.setLast(null);

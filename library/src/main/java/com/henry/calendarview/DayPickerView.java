@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import java.io.Serializable;
 import java.util.List;
@@ -77,14 +78,15 @@ public class DayPickerView extends RecyclerView {
      * @param mController 回调监听
      */
     public void setParameter(DataModel dataModel, DatePickerController mController) {
-        if (dataModel.leastDaysNum > dataModel.mostDaysNum) {
-            throw new IllegalArgumentException("可选择的最小天数不能小于最大天数");
+        if(dataModel == null) {
+            Log.e("crash", "请设置参数");
+            return;
         }
         this.dataModel = dataModel;
         this.mController = mController;
+        setUpAdapter();
         // 跳转到入住日期所在的月份
         scrollToSelectedPosition(dataModel.selectedDays, dataModel.monthStart);
-        setUpAdapter();
     }
 
     private void scrollToSelectedPosition(SimpleMonthAdapter.SelectedDays<SimpleMonthAdapter.CalendarDay> selectedDays, int monthStart) {
