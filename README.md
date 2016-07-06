@@ -1,7 +1,7 @@
 # CalendarView
 ================
 
-CalendarView是一个高度定制的日期选择器，可以满足在线预订酒店日期的需求。
+CalendarView是一个高度定制的日期选择器，可以满足多选日期的需求。
 
 ![CalendarView GIF](https://github.com/henry-newbie/CalendarView/master/screenshot/calendar.gif)
  
