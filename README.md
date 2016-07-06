@@ -1,9 +1,9 @@
 # CalendarView
 ================
 
-CalendarListview是一个高度定制的日期选择器，可以满足在线预订酒店日期的需求。
+CalendarView是一个高度定制的日期选择器，可以满足在线预订酒店日期的需求。
 
-![CalendarListview GIF](https://github.com/traex/CalendarListview/blob/master/demo.gif)
+![CalendarView GIF](https://github.com/henry-newbie/CalendarView/master/screenshot/calendar.gif)
  
 ### 集成
 该库已上传到Jcenter中, 可以再build.gradle中直接添加
