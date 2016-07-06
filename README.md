@@ -3,7 +3,7 @@
 
 CalendarView是一个高度定制的日期选择器，可以满足多选日期的需求。
 
-![CalendarView GIF](https://github.com/henry-newbie/CalendarView/master/screenshot/calendar.gif)
+![CalendarView GIF](https://github.com/henry-newbie/CalendarView/blob/master/screenshot/calendar.gif)
  
 ### 集成
 该库已上传到Jcenter中, 可以再build.gradle中直接添加
