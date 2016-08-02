@@ -9,7 +9,7 @@ CalendarView是一个高度定制的日期选择器，可以满足多选日期�
 该库已上传到Jcenter中, 可以再build.gradle中直接添加
 
 	dependencies {
-	    compile 'com.henry:calendarview:1.1.1'
+	    compile 'com.henry:calendarview:1.1.2'
 	}
  
 ### 使用
