@@ -106,7 +106,7 @@ alertSelectedFail(FailEven even);										   异常回调函数
 
 ### 联系我
 
-有问题可以直接在issues中反馈，我会及时fix，也可以加我秋秋：643995508，欢迎start。
+有问题可以直接在issues中反馈，我会及时fix，欢迎start。
 
 ### 感谢
 
